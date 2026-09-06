@@ -5,7 +5,7 @@ endif()
 message(WARNING "Enabling distributed compiling support, this is experimental and only tested in Taichi's internal CI/CD system, use at your own risk.")
 
 execute_process(
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   COMMAND ${CMAKE_CXX_COMPILER} -print-target-triple
   OUTPUT_VARIABLE TRIPLET
   OUTPUT_STRIP_TRAILING_WHITESPACE)

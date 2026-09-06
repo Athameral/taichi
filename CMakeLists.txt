@@ -22,12 +22,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_EXPORT_COMPILECOMMANDS ON)
 
 execute_process(
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   COMMAND git rev-parse --short HEAD
   RESULT_VARIABLE SHORT_HASH_RESULT
   OUTPUT_VARIABLE TI_COMMIT_SHORT_HASH)
 execute_process(
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   COMMAND git rev-parse HEAD
   RESULT_VARIABLE SHORT_HASH_RESULT
   OUTPUT_VARIABLE TI_COMMIT_HASH)
@@ -200,8 +200,8 @@ if (TI_WITH_LLVM)
     add_subdirectory(taichi/runtime/llvm/runtime_module)
 endif()
 
-configure_file(taichi/common/version.h.in ${CMAKE_SOURCE_DIR}/taichi/common/version.h)
-configure_file(taichi/common/commit_hash.h.in ${CMAKE_SOURCE_DIR}/taichi/common/commit_hash.h)
+configure_file(taichi/common/version.h.in ${CMAKE_CURRENT_SOURCE_DIR}/taichi/common/version.h)
+configure_file(taichi/common/commit_hash.h.in ${CMAKE_CURRENT_SOURCE_DIR}/taichi/common/commit_hash.h)
 
 option(TI_WITH_C_API "build taichi runtime c-api library" ON)  # wheel-tag: aot
 option(TI_WITH_STATIC_C_API "build static taichi runtime c-api library" OFF)  # wheel-tag: static_aot
@@ -233,10 +233,10 @@ option(TI_WITH_GRAPHVIZ "generate dependency graphs between targets" OFF)  # whe
 if (TI_WITH_GRAPHVIZ)
   set(GRAPHVIZ_GRAPH_NAME "ti_targets")
   add_custom_target(graphviz ALL
-      COMMAND cp ${CMAKE_SOURCE_DIR}/cmake/CMakeGraphVizOptions.cmake .
+      COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/cmake/CMakeGraphVizOptions.cmake .
       COMMAND ${CMAKE_COMMAND} "--graphviz=${GRAPHVIZ_GRAPH_NAME}.dot" .
       COMMAND dot -Tpng ${GRAPHVIZ_GRAPH_NAME}.dot -o ${GRAPHVIZ_GRAPH_NAME}.png
-      COMMAND cp ti_targets.png ${CMAKE_SOURCE_DIR}/build
+      COMMAND cp ti_targets.png ${CMAKE_CURRENT_SOURCE_DIR}/build
       WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
   )
 endif()

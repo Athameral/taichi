@@ -136,7 +136,7 @@ add_subdirectory(taichi/rhi)
 set(CORE_LIBRARY_NAME taichi_core)
 add_library(${CORE_LIBRARY_NAME} OBJECT ${TAICHI_CORE_SOURCE})
 
-target_include_directories(${CORE_LIBRARY_NAME} PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(${CORE_LIBRARY_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(${CORE_LIBRARY_NAME} PRIVATE external/include)
 target_include_directories(${CORE_LIBRARY_NAME} PRIVATE external/SPIRV-Tools/include)
 target_include_directories(${CORE_LIBRARY_NAME} PRIVATE external/PicoSHA2)
@@ -427,12 +427,12 @@ if(TI_WITH_PYTHON)
 endif()
 
 if (NOT APPLE)
-    install(FILES ${CMAKE_SOURCE_DIR}/external/cuda_libdevice/slim_libdevice.10.bc
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/external/cuda_libdevice/slim_libdevice.10.bc
             DESTINATION ${INSTALL_LIB_DIR}/runtime)
 endif()
 
 if (TI_WITH_AMDGPU)
-    file(GLOB AMDGPU_BC_FILES ${CMAKE_SOURCE_DIR}/external/amdgpu_libdevice/*.bc)
+    file(GLOB AMDGPU_BC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/external/amdgpu_libdevice/*.bc)
     install(FILES ${AMDGPU_BC_FILES}
             DESTINATION ${INSTALL_LIB_DIR}/runtime)
 endif()
