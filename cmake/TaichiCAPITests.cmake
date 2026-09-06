@@ -53,7 +53,7 @@ if(LINUX)
     target_link_options(${C_API_TESTS_NAME} PUBLIC -static-libgcc -static-libstdc++)
 endif()
 
-if(TI_WITH_STATIC_C_API)
+if(TI_WITH_STATIC_C_API AND APPLE)
     set(C_STATIC_API_TESTS_NAME taichi_static_c_api_tests)
 
     # TODO(#2195):

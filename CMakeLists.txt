@@ -208,9 +208,6 @@ option(TI_WITH_STATIC_C_API "build static taichi runtime c-api library" OFF)  # 
 
 if(TI_WITH_STATIC_C_API)
     set(TI_WITH_C_API ${TI_WITH_STATIC_C_API})
-    if(NOT APPLE)
-        message(FATAL_ERROR "TI_WITH_STATIC_C_API requires Apple compilation sdk, thus only supported on MacOS")
-    endif()
 endif()
 
 if (TI_WITH_C_API)

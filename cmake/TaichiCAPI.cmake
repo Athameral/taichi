@@ -63,7 +63,11 @@ if(TI_BUILD_TESTS)
   list(APPEND C_API_SOURCE "c_api/src/c_api_test_utils.cpp")
 endif()
 
+if (TI_WITH_STATIC_C_API)
+add_library(${TAICHI_C_API_NAME} STATIC ${C_API_SOURCE})
+else()
 add_library(${TAICHI_C_API_NAME} SHARED ${C_API_SOURCE})
+endif()
 if (${CMAKE_GENERATOR} STREQUAL "Xcode")
   target_link_libraries(${TAICHI_C_API_NAME} PRIVATE taichi_core)
   message(WARNING "Static wrapping does not work on Xcode, using object linking instead.")
@@ -201,7 +205,7 @@ else()
   install_taichi_c_api(Distribute c_api)
 endif()
 
-if(TI_WITH_STATIC_C_API)
+if(TI_WITH_STATIC_C_API AND APPLE)
     # Traditional C++ static library is simply an archive of various .o files, resulting in a huge
     # file mixed with thousands of resolved or unresolved symbols.
     #
