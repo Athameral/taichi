@@ -80,9 +80,8 @@ class WholeKernelCSE : public BasicStmtVisitor {
       if (x == nullptr)
         continue;
       // Hash the addresses of the operand pointers.
-      hash_code =
-          (hash_code * 33) ^
-          (std::hash<unsigned long>{}(reinterpret_cast<unsigned long>(x)));
+      hash_code = (hash_code * 33) ^
+                  (std::hash<uintptr_t>{}(reinterpret_cast<uintptr_t>(x)));
     }
     return hash_type ^ hash_code;
   }
