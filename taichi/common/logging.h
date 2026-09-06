@@ -27,7 +27,7 @@ class logger;
       fmt::format("[{}:{}@{}] ", __FILENAME__, __FUNCTION__, __LINE__) + \
       fmt::format(__VA_ARGS__))
 
-#if defined(TI_PLATFORM_WINDOWS)
+#if defined(TI_PLATFORM_WINDOWS) && !defined(__clang__)
 #define TI_UNREACHABLE __assume(0);
 #else
 #define TI_UNREACHABLE __builtin_unreachable();
