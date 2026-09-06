@@ -14,9 +14,14 @@ endif()
 if (MINGW)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_hypot=hypot")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMS_WIN64")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libgcc")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++")
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+        # only required by and available for GCC, not Clang
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libgcc")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++")
+    elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+        # Handle Clang-specific flags if needed
+    endif()
 endif ()
 
 # Do not enable lto for APPLE since it made linking extremely slow.
@@ -54,7 +59,7 @@ if (WIN32)
         # C4624: destructor was implicitly defined as deleted because a base class destructor is inaccessible or deleted
         # These warnings are not emitted on Clang (mostly within LLVM source code)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4244 /wd4267 /wd4624 /nologo /D \"_CRT_SECURE_NO_WARNINGS\" /D \"_ENABLE_EXTENDED_ALIGNED_STORAGE\"")
-    else()
+    elseif(NOT MINGW)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -fsized-deallocation -target x86_64-pc-windows-msvc")
         set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -gcodeview")
         set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -gcodeview")

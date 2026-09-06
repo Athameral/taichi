@@ -74,6 +74,13 @@ else()
 endif()
 target_enable_function_level_linking(${TAICHI_C_API_NAME})
 
+
+if(MINGW AND CLANG)
+  # target_link_libraries(${TAICHI_C_API_NAME} PRIVATE c++ unwind dbghelp)
+  # dbghelp is needed for msvc and mingw. but we use clang.
+  target_link_libraries(${TAICHI_C_API_NAME} PRIVATE c++ unwind)
+endif()
+
 # Strip shared library
 set_target_properties(${TAICHI_C_API_NAME} PROPERTIES LINK_FLAGS_RELEASE -s)
 
