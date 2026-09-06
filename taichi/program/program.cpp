@@ -72,7 +72,7 @@ Program::Program(Arch desired_arch) : snode_rw_accessors_bank_(this) {
   __asm__ __volatile__("");
 #endif  // defined(__arm64__) || defined(__aarch64__)
   auto &config = compile_config_;
-  config = default_compile_config;
+  config = default_compile_config();
   config.arch = desired_arch;
   config.fit();
 
@@ -349,7 +349,7 @@ void Program::finalize() {
   finalized_ = true;
   num_instances_ -= 1;
   program_impl_->dump_cache_data_to_disk();
-  compile_config_ = default_compile_config;
+  compile_config_ = default_compile_config();
   TI_TRACE("Program ({}) finalized_.", fmt::ptr(this));
 
   // Reset memory pool

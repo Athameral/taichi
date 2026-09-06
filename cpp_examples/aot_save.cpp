@@ -5,7 +5,7 @@ using namespace taichi;
 using namespace lang;
 
 void run_aot(taichi::Arch arch) {
-  default_compile_config.advanced_optimization = false;
+  default_compile_config().advanced_optimization = false;
   auto program = Program(arch);
 
   int n = 10;

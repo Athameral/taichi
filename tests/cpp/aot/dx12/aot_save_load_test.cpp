@@ -16,7 +16,7 @@ using namespace lang;
 namespace fs = std::filesystem;
 
 [[maybe_unused]] static void aot_save(std::string &tmp_path) {
-  default_compile_config.advanced_optimization = false;
+  default_compile_config().advanced_optimization = false;
   auto program = Program(Arch::dx12);
 
   int n = 10;

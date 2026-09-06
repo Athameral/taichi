@@ -259,11 +259,11 @@ void export_lang(py::module &m) {
       .def_readwrite("cuda_stack_limit", &CompileConfig::cuda_stack_limit);
 
   m.def("reset_default_compile_config",
-        [&]() { default_compile_config = CompileConfig(); });
+        [&]() { default_compile_config() = CompileConfig(); });
 
   m.def(
       "default_compile_config",
-      [&]() -> CompileConfig & { return default_compile_config; },
+      [&]() -> CompileConfig & { return default_compile_config(); },
       py::return_value_policy::reference);
 
   py::class_<Program::KernelProfilerQueryResult>(m, "KernelProfilerQueryResult")

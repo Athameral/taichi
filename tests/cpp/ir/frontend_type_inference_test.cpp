@@ -40,7 +40,7 @@ TEST(FrontendTypeInference, Id) {
 }
 
 TEST(FrontendTypeInference, BinaryOp) {
-  default_compile_config.default_fp = PrimitiveType::f64;
+  default_compile_config().default_fp = PrimitiveType::f64;
   auto prog = std::make_unique<Program>(Arch::x64);
   auto const_i32 = value<int32>(-(1 << 20));
   const_i32->type_check(nullptr);
@@ -52,7 +52,7 @@ TEST(FrontendTypeInference, BinaryOp) {
 }
 
 TEST(FrontendTypeInference, UnaryOp) {
-  default_compile_config.default_fp = PrimitiveType::f64;
+  default_compile_config().default_fp = PrimitiveType::f64;
   auto prog = std::make_unique<Program>(Arch::x64);
   auto const_i16 = value<int16>(-(1 << 10));
 

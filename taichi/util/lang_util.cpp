@@ -11,7 +11,10 @@
 
 namespace taichi::lang {
 
-CompileConfig default_compile_config;
+CompileConfig &default_compile_config() {
+  static CompileConfig config;
+  return config;
+}
 std::string compiled_lib_dir;
 std::string runtime_tmp_dir;
 

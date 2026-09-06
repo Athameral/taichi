@@ -127,7 +127,7 @@ TEST(Dx11ProgramTest, MaterializeRuntimeTest) {
       std::make_unique<directx11::Dx11Device>();
 
   std::unique_ptr<Dx11ProgramImpl> program =
-      std::make_unique<Dx11ProgramImpl>(default_compile_config);
+      std::make_unique<Dx11ProgramImpl>(default_compile_config());
   /*
   This test needs allocate_memory because of the call stack here:
   Dx11ProgramImpl::materialize_runtime

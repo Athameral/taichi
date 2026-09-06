@@ -260,7 +260,7 @@ class StaticTraits {
   static Trait *get(StaticTraitID traitId);
 
  private:
-  inline static std::map<StaticTraitID, std::unique_ptr<Trait>> traits_;
+  static std::map<StaticTraitID, std::unique_ptr<Trait>> &traits();
   static void init_traits();
 };
 

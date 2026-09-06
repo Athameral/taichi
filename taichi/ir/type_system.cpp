@@ -227,20 +227,25 @@ std::string DynamicTrait::to_string() const {
 }
 
 Trait *StaticTraits::get(StaticTraitID traitId) {
-  if (traits_.empty()) {
+  if (traits().empty()) {
     init_traits();
   }
-  return traits_[traitId].get();
+  return traits()[traitId].get();
+}
+
+std::map<StaticTraitID, std::unique_ptr<Trait>> &StaticTraits::traits() {
+  static std::map<StaticTraitID, std::unique_ptr<Trait>> traits_;
+  return traits_;
 }
 
 void StaticTraits::init_traits() {
-  traits_[StaticTraitID::real] =
+  traits()[StaticTraitID::real] =
       std::make_unique<DynamicTrait>("Real", is_real);
-  traits_[StaticTraitID::integral] =
+  traits()[StaticTraitID::integral] =
       std::make_unique<DynamicTrait>("Integral", is_integral);
-  traits_[StaticTraitID::primitive] = std::make_unique<DynamicTrait>(
+  traits()[StaticTraitID::primitive] = std::make_unique<DynamicTrait>(
       "Primitive", [](DataType dt) { return dt->is<PrimitiveType>(); });
-  traits_[StaticTraitID::scalar] = std::make_unique<DynamicTrait>(
+  traits()[StaticTraitID::scalar] = std::make_unique<DynamicTrait>(
       "Scalar", [](DataType dt) { return is_real(dt) || is_integral(dt); });
 }
 
