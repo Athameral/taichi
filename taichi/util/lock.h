@@ -7,6 +7,10 @@
 #if defined(TI_PLATFORM_WINDOWS)
 #include <io.h>
 #include <fcntl.h>
+  #ifdef __MINGW32__
+#include <share.h>
+#include <sys/stat.h>
+  #endif
 #else  // POSIX
 #include <sys/types.h>
 #include <sys/stat.h>
