@@ -5,11 +5,10 @@
 
 #include "taichi/common/core.h"
 #include "taichi/common/task.h"
-#if !defined(_WIN64)
+#if !defined(_WIN64) || defined(__MINGW32__)
 #include <cxxabi.h>
-#endif
 
-#if defined(TI_PLATFORM_WINDOWS)
+#elif defined(TI_PLATFORM_WINDOWS)
 #include <DbgHelp.h>
 #endif
 
@@ -18,7 +17,7 @@ namespace taichi {
 // From https://en.wikipedia.org/wiki/Name_mangling
 
 std::string cpp_demangle(const std::string &mangled_name) {
-#if defined(TI_PLATFORM_UNIX)
+#if defined(TI_PLATFORM_UNIX) || defined(__MINGW32__)
   char *demangled_name;
   int status = -1;
   demangled_name =
