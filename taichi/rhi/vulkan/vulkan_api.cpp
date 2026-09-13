@@ -172,8 +172,15 @@ IVkDescriptorSet allocate_descriptor_sets(IVkDescriptorPool pool,
   info.descriptorSetCount = 1;
   info.pSetLayouts = &layout->layout;
 
-  if (vkAllocateDescriptorSets(pool->device, &info, &obj->set) ==
-      VK_ERROR_OUT_OF_POOL_MEMORY) {
+  VkResult res = vkAllocateDescriptorSets(pool->device, &info, &obj->set);
+  // The original implementation only treated VK_ERROR_OUT_OF_POOL_MEMORY as
+  // failure, but the spec allows drivers to return other error codes when the
+  // pool is exhausted or fragmented (e.g. VK_ERROR_FRAGMENTED_POOL). Any
+  // non-VK_SUCCESS result must be treated as failure: otherwise an object
+  // wrapping set==VK_NULL_HANDLE is returned as "success", and the subsequent
+  // vkUpdateDescriptorSets(NULL) crashes inside some NVIDIA drivers
+  // (0xC0000005 access violation).
+  if (res != VK_SUCCESS) {
     return nullptr;
   }
 

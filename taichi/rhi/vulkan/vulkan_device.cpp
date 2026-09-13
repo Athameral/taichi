@@ -2443,6 +2443,12 @@ RhiReturn<vkapi::IVkDescriptorSet> VulkanDevice::alloc_desc_set(
       return {status, nullptr};
     }
     set = vkapi::allocate_descriptor_sets(desc_pool_, layout);
+    // A failure after pool recreation must not return success+null: callers
+    // would hand the VK_NULL_HANDLE set to vkUpdateDescriptorSets /
+    // vkCmdBindDescriptorSets and crash inside the driver.
+    if (set == nullptr) {
+      return {RhiResult::out_of_memory, nullptr};
+    }
   }
 
   return {RhiResult::success, set};
