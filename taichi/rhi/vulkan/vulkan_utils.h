@@ -5,7 +5,10 @@
 #include <aclapi.h>
 #include <dxgi1_2.h>
 #include <windows.h>
-#include <VersionHelpers.h>
+// mingw-w64 ships this header as lowercase "versionhelpers.h"; MSVC's
+// Windows SDK uses "VersionHelpers.h". NTFS is case-insensitive so either
+// spelling works locally, but the Linux CI cross-build is case-sensitive.
+#include <versionhelpers.h>
 #endif
 
 #include "taichi/rhi/vulkan/vulkan_common.h"

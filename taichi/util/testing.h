@@ -6,6 +6,9 @@
 #pragma once
 
 #define BENCHMARK CATCH_BENCHMARK
+// catch.hpp uses std::nothrow but never includes <new> itself; newer
+// libc++ no longer pulls it in transitively.
+#include <new>
 #include <catch.hpp>
 #undef BENCHMARK
 
