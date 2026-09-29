@@ -332,7 +332,8 @@ elseif (LINUX)
         endif()
     endif()
 elseif (WIN32)
-    target_link_libraries(${CORE_LIBRARY_NAME} PRIVATE Winmm)
+    target_link_libraries(${CORE_LIBRARY_NAME} PRIVATE winmm)
+    # 'w' is lowercase in mingw, but ok on Windows.
 endif()
 
 
